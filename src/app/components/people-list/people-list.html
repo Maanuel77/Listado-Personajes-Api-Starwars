@@ -1,0 +1,38 @@
+<div class="row g-4">
+  @for (p of peopleList(); track p.url) {
+  <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+    <app-people-item [people]="p" (peopleClick)="openModal($event)"></app-people-item>
+  </div>
+  } @empty {
+  <p class="text-muted">Cargando personajes...</p>
+  }
+</div>
+
+<!-- Modal: solo se muestra si hay un personaje seleccionado -->
+@if (selectedPeople(); as p) {
+<div class="modal d-block" tabindex="-1" (click)="closeModal()">
+  <div class="modal-dialog modal-dialog-centered" (click)="$event.stopPropagation()">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ p.name }}</h5>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group">
+          <li class="list-group-item">Altura: {{ p.height }} cm</li>
+          <li class="list-group-item">Peso: {{ p.mass }} kg</li>
+          <li class="list-group-item">Pelo: {{ p.hair_color }}</li>
+          <li class="list-group-item">Piel: {{ p.skin_color }}</li>
+          <li class="list-group-item">Ojos: {{ p.eye_color }}</li>
+          <li class="list-group-item">Nacimiento: {{ p.birth_year }}</li>
+          <li class="list-group-item">Género: {{ p.gender }}</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop show"></div>
+}
